@@ -66,3 +66,9 @@ export type SignInResponse = {
   status: number;
   message?: string;
 };
+
+export type ExerciseSession = {
+  id: number;
+  active: boolean;
+  data: string;
+};

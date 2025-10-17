@@ -10,6 +10,7 @@ import { Exercise } from "app/types";
 import * as React from "react";
 import { getFormattedTime } from "../util/getFormattedTime";
 import { useBoundStore } from "../store/store";
+import { useUpdateExerciseSession } from "../hooks/useUpdateExerciseSession";
 
 type Props = {
   exercises: Exercise[];
@@ -27,6 +28,7 @@ export const RepsModal = ({ exercises }: Props) => {
   const startStopwatch = useBoundStore((state) => state.startStopwatch);
   const resetStopwatch = useBoundStore((state) => state.resetStopwatch);
   const setSavedStartTime = useBoundStore((state) => state.setSavedStartTime);
+  const updateExerciseSession = useUpdateExerciseSession();
 
   if (!selectedExercise) {
     return null;
@@ -50,6 +52,7 @@ export const RepsModal = ({ exercises }: Props) => {
       }
 
       setSavedReps(newReps);
+      updateExerciseSession.mutate(newReps);
 
       if (selectedExercise.category !== "WARM_UP") {
         resetStopwatch();
@@ -85,6 +88,7 @@ export const RepsModal = ({ exercises }: Props) => {
     if (existingExercise) {
       existingExercise.reps = [];
       setSavedReps(newReps);
+      updateExerciseSession.mutate(newReps);
     }
 
     setModalOpen(false);
