@@ -28,6 +28,7 @@ public class ExerciseSession {
     @JsonIgnore
     private User user;
 
+    @Lob
     @JsonRawValue
     private String data;
 

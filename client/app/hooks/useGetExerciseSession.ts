@@ -9,5 +9,6 @@ export const useGetExerciseSession = () => {
     queryFn: async () => {
       return await fetchWithAuth("/exercise-session");
     },
+    staleTime: 5 * 60 * 1000, // 5 minutes
   });
 };

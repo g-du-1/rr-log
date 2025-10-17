@@ -12,10 +12,15 @@ export const useUpdateExerciseSession = () => {
       });
     },
     onMutate: (newExerciseSession) => {
-      queryClient.setQueryData(["getExerciseSession"], newExerciseSession);
+      queryClient.setQueryData(["getExerciseSession"], {
+        data: newExerciseSession,
+      });
     },
     onSuccess: (data) => {
       queryClient.setQueryData(["getExerciseSession"], data);
+    },
+    onError: (error, variables, context) => {
+      queryClient.invalidateQueries({ queryKey: ["getExerciseSession"] });
     },
   });
 };
