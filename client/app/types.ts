@@ -70,5 +70,7 @@ export type SignInResponse = {
 export type ExerciseSession = {
   id: number;
   active: boolean;
-  data: string;
+  data: {
+    [key: string]: SavedReps;
+  };
 };

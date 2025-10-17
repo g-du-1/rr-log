@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import { Exercise } from "app/types";
-import { useBoundStore } from "../../store/store";
+import { useGetExerciseSession } from "../../hooks/useGetExerciseSession";
 
 const getRepRangeStatus = (exercise: Exercise, rep: number) => {
   const min = exercise.targetRepsMin || 0;
@@ -16,7 +16,8 @@ const getRepRangeStatus = (exercise: Exercise, rep: number) => {
 };
 
 export const SavedReps = ({ exercise }: { exercise: Exercise }) => {
-  const savedReps = useBoundStore((state) => state.savedReps);
+  const { data: exerciseSession } = useGetExerciseSession();
+  const savedReps = exerciseSession?.data;
   const exerciseReps = savedReps?.[exercise.key]?.reps || [];
 
   if (exerciseReps.length === 0) {
