@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchWithAuth } from "../util/fetchWithAuth";
-import { ExerciseSession, SavedReps } from "app/types";
+import { ExerciseSessionResponse, SavedReps } from "app/types";
 
 export const useUpdateExerciseSession = () => {
   const queryClient = useQueryClient();
@@ -12,20 +12,17 @@ export const useUpdateExerciseSession = () => {
         body: JSON.stringify({ data }),
       });
     },
-    onMutate: (newExerciseSession) => {
+    onMutate: (newData: { [key: string]: SavedReps }) => {
       queryClient.setQueryData(
         ["getExerciseSession"],
-        (oldData: ExerciseSession) => ({
+        (oldData: ExerciseSessionResponse) => ({
           ...oldData,
-          data: newExerciseSession,
+          data: newData,
         })
       );
     },
     onSuccess: (data) => {
       queryClient.setQueryData(["getExerciseSession"], data);
-    },
-    onError: (error, variables, context) => {
-      queryClient.invalidateQueries({ queryKey: ["getExerciseSession"] });
     },
   });
 };

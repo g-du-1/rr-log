@@ -67,10 +67,16 @@ export type SignInResponse = {
   message?: string;
 };
 
-export type ExerciseSession = {
+export type ExerciseSessionResponse = {
   id: number;
   active: boolean;
   createdAt: string;
+  data: {
+    [key: string]: SavedReps;
+  };
+};
+
+export type UpdateExerciseSessionRequest = {
   data: {
     [key: string]: SavedReps;
   };
