@@ -1,13 +1,14 @@
 import Box from "@mui/material/Box";
-import { useBoundStore } from "../store/store";
+import { useGetExerciseSession } from "../hooks/useGetExerciseSession";
 
 export const StartTime = () => {
-  const savedStartTime = useBoundStore((state) => state.savedStartTime);
+  const { data } = useGetExerciseSession();
+  const createdAt = data?.createdAt;
 
-  if (savedStartTime) {
+  if (createdAt) {
     return (
       <Box textAlign={"center"} fontWeight={500} mb={1}>
-        Started: {savedStartTime}
+        Started: {new Date(createdAt).toLocaleString()}
       </Box>
     );
   }
