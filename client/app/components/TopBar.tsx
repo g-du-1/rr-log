@@ -1,8 +1,12 @@
 import AppBar from "@mui/material/AppBar";
 import { StopWatch } from "./StopWatch";
 import { SideMenu } from "./SideMenu";
+import Button from "@mui/material/Button";
+import { useStartExerciseSession } from "../hooks/useStartExerciseSession";
 
 export const TopBar = () => {
+  const mutation = useStartExerciseSession();
+
   return (
     <AppBar
       position="fixed"
@@ -16,6 +20,14 @@ export const TopBar = () => {
       }}
     >
       <StopWatch />
+
+      <Button
+        onClick={() => {
+          mutation.mutate();
+        }}
+      >
+        Start
+      </Button>
 
       <SideMenu />
     </AppBar>
