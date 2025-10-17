@@ -24,7 +24,6 @@ export const RepsModal = ({ exercises }: Props) => {
   const savedStartTime = useBoundStore((state) => state.savedStartTime);
   const setFieldValue = useBoundStore((state) => state.setFieldValue);
   const setModalOpen = useBoundStore((state) => state.setModalOpen);
-  const setSavedReps = useBoundStore((state) => state.setSavedReps);
   const startStopwatch = useBoundStore((state) => state.startStopwatch);
   const resetStopwatch = useBoundStore((state) => state.resetStopwatch);
   const setSavedStartTime = useBoundStore((state) => state.setSavedStartTime);
@@ -53,7 +52,6 @@ export const RepsModal = ({ exercises }: Props) => {
         };
       }
 
-      setSavedReps(newReps);
       updateExerciseSession.mutate(newReps);
 
       if (selectedExercise.category !== "WARM_UP") {
@@ -89,7 +87,6 @@ export const RepsModal = ({ exercises }: Props) => {
 
     if (existingExercise) {
       existingExercise.reps = [];
-      setSavedReps(newReps);
       updateExerciseSession.mutate(newReps);
     }
 
