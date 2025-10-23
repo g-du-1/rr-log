@@ -570,28 +570,6 @@ describe("ExerciseTracker", async () => {
     expect(screen.getByText("Parallel Bar Support Hold")).toBeVisible();
   });
 
-  it("saves and renders start time", async () => {
-    await renderExerciseTracker();
-
-    clickOpenModalTrigger(0);
-
-    submitReps("8");
-
-    const startTime = getFormattedTime();
-
-    expect(screen.getByText(`Started: ${startTime}`)).toBeInTheDocument();
-
-    act(() => {
-      vi.advanceTimersByTime(500000);
-    });
-
-    clickOpenModalTrigger(1);
-
-    submitReps("6");
-
-    expect(screen.getByText(`Started: ${startTime}`)).toBeInTheDocument();
-  });
-
   it("saves and renders finish time after completing the last exercise", async () => {
     await renderExerciseTracker();
 
@@ -868,6 +846,11 @@ describe("ExerciseTracker", async () => {
 
     fireEvent.click(screen.getByLabelText("Open Menu"));
     fireEvent.click(screen.getByText("New Session"));
-    expect(screen.getByText("2025-11-26")).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("Started: 26/11/2025, 00:00:00"),
+      ).toBeInTheDocument();
+    });
   });
 });
