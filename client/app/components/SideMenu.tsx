@@ -8,6 +8,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import SettingsIcon from "@mui/icons-material/Settings";
 import IconButton from "@mui/material/IconButton";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import Checkbox from "@mui/material/Checkbox";
 import { useRouter } from "next/navigation";
 import Divider from "@mui/material/Divider";
@@ -72,6 +73,22 @@ export const SideMenu = () => {
         </ListItem>
 
         <Divider />
+
+        <ListItem key={"New Exercise Session"} disablePadding>
+          <ListItemButton
+            aria-label={`Start New Exercise Session`}
+            onClick={() => {}}
+          >
+            <ListItemIcon sx={{ justifyContent: "center" }}>
+              <FitnessCenterIcon />
+            </ListItemIcon>
+
+            <ListItemText
+              primary={"New Session"}
+              sx={{ paddingLeft: ".5rem" }}
+            />
+          </ListItemButton>
+        </ListItem>
 
         <ListItem key={"Show Completed"} disablePadding>
           <ListItemButton

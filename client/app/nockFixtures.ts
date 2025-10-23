@@ -94,3 +94,13 @@ export const deleteAllExercises = {
     },
   },
 };
+
+export const startNewExerciseSession = {
+  path: "/api/v1/exercise-session", // POST
+  success: {
+    status: 200,
+    response: {
+      createdAt: "2025-11-26T00:00:00.000Z",
+    },
+  },
+};

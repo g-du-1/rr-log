@@ -16,6 +16,7 @@ import {
   saveUserSettings,
   userExercises,
   getUserSettings,
+  startNewExerciseSession,
 } from "../nockFixtures";
 
 const mockPush = vi.fn();
@@ -853,5 +854,20 @@ describe("ExerciseTracker", async () => {
     await waitFor(() => {
       expect(screen.getByLabelText("Show media is off")).toBeInTheDocument();
     });
+  });
+
+  it("starts a new exercise session when the button is clicked", async () => {
+    nock(nockBaseUrl)
+      .post(startNewExerciseSession.path)
+      .reply(
+        startNewExerciseSession.success.status,
+        startNewExerciseSession.success.response,
+      );
+
+    await renderExerciseTracker();
+
+    fireEvent.click(screen.getByLabelText("Open Menu"));
+    fireEvent.click(screen.getByText("New Session"));
+    expect(screen.getByText("2025-11-26")).toBeInTheDocument();
   });
 });
