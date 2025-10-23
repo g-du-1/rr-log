@@ -441,6 +441,41 @@ exports[`ExerciseTracker > matches snapshot 1`] = `
             class="MuiListItem-root MuiListItem-gutters css-19f6boz-MuiListItem-root"
           >
             <div
+              aria-label="Start New Exercise Session"
+              class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-4bx69l-MuiButtonBase-root-MuiListItemButton-root"
+              role="button"
+              tabindex="0"
+            >
+              <div
+                class="MuiListItemIcon-root css-8gfta9-MuiListItemIcon-root"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root"
+                  data-testid="FitnessCenterIcon"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20.57 14.86 22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"
+                  />
+                </svg>
+              </div>
+              <div
+                class="MuiListItemText-root css-1i4r5sg-MuiListItemText-root"
+              >
+                <span
+                  class="MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-rizt0-MuiTypography-root"
+                >
+                  New Session
+                </span>
+              </div>
+            </div>
+          </li>
+          <li
+            class="MuiListItem-root MuiListItem-gutters css-19f6boz-MuiListItem-root"
+          >
+            <div
               aria-label="Show completed exercises is on"
               class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-4bx69l-MuiButtonBase-root-MuiListItemButton-root"
               role="button"

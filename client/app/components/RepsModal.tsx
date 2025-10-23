@@ -20,13 +20,11 @@ export const RepsModal = ({ exercises }: Props) => {
   const modalOpen = useBoundStore((state) => state.modalOpen);
   const savedReps = useBoundStore((state) => state.savedReps);
   const selectedExercise = useBoundStore((state) => state.selectedExercise);
-  const savedStartTime = useBoundStore((state) => state.savedStartTime);
   const setFieldValue = useBoundStore((state) => state.setFieldValue);
   const setModalOpen = useBoundStore((state) => state.setModalOpen);
   const setSavedReps = useBoundStore((state) => state.setSavedReps);
   const startStopwatch = useBoundStore((state) => state.startStopwatch);
   const resetStopwatch = useBoundStore((state) => state.resetStopwatch);
-  const setSavedStartTime = useBoundStore((state) => state.setSavedStartTime);
 
   if (!selectedExercise) {
     return null;
@@ -66,10 +64,6 @@ export const RepsModal = ({ exercises }: Props) => {
         if (shouldStartStopwatch) {
           startStopwatch();
         }
-      }
-
-      if (!savedStartTime) {
-        setSavedStartTime(getFormattedTime());
       }
     }
 

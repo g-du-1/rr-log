@@ -66,3 +66,7 @@ export type SignInResponse = {
   status: number;
   message?: string;
 };
+
+export type ExerciseSession = {
+  createdAt: string;
+};

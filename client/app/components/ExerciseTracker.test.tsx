@@ -16,6 +16,7 @@ import {
   saveUserSettings,
   userExercises,
   getUserSettings,
+  startNewExerciseSession,
 } from "../nockFixtures";
 
 const mockPush = vi.fn();
@@ -569,28 +570,6 @@ describe("ExerciseTracker", async () => {
     expect(screen.getByText("Parallel Bar Support Hold")).toBeVisible();
   });
 
-  it("saves and renders start time", async () => {
-    await renderExerciseTracker();
-
-    clickOpenModalTrigger(0);
-
-    submitReps("8");
-
-    const startTime = getFormattedTime();
-
-    expect(screen.getByText(`Started: ${startTime}`)).toBeInTheDocument();
-
-    act(() => {
-      vi.advanceTimersByTime(500000);
-    });
-
-    clickOpenModalTrigger(1);
-
-    submitReps("6");
-
-    expect(screen.getByText(`Started: ${startTime}`)).toBeInTheDocument();
-  });
-
   it("saves and renders finish time after completing the last exercise", async () => {
     await renderExerciseTracker();
 
@@ -852,6 +831,26 @@ describe("ExerciseTracker", async () => {
 
     await waitFor(() => {
       expect(screen.getByLabelText("Show media is off")).toBeInTheDocument();
+    });
+  });
+
+  it("starts a new exercise session when the button is clicked", async () => {
+    nock(nockBaseUrl)
+      .post(startNewExerciseSession.path)
+      .reply(
+        startNewExerciseSession.success.status,
+        startNewExerciseSession.success.response,
+      );
+
+    await renderExerciseTracker();
+
+    fireEvent.click(screen.getByLabelText("Open Menu"));
+    fireEvent.click(screen.getByText("New Session"));
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("Started: 26/11/2025, 00:00:00"),
+      ).toBeInTheDocument();
     });
   });
 });
