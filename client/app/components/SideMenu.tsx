@@ -15,13 +15,15 @@ import Divider from "@mui/material/Divider";
 import HouseIcon from "@mui/icons-material/House";
 import { useGetUserSettings } from "../hooks/useGetUserSettings";
 import { useSaveUserSettings } from "../hooks/useSaveUserSettings";
+import { useStartExerciseSession } from "../hooks/useStartExerciseSession";
 
 export const SideMenu = () => {
   const router = useRouter();
 
   const { data: userSettings } = useGetUserSettings();
 
-  const mutation = useSaveUserSettings();
+  const saveUserSettingsMutation = useSaveUserSettings();
+  const startExSessionMutation = useStartExerciseSession();
 
   const [open, setOpen] = React.useState(false);
 
@@ -77,7 +79,7 @@ export const SideMenu = () => {
         <ListItem key={"New Exercise Session"} disablePadding>
           <ListItemButton
             aria-label={`Start New Exercise Session`}
-            onClick={() => {}}
+            onClick={() => startExSessionMutation.mutate()}
           >
             <ListItemIcon sx={{ justifyContent: "center" }}>
               <FitnessCenterIcon />
@@ -94,7 +96,7 @@ export const SideMenu = () => {
           <ListItemButton
             aria-label={`Show completed exercises is ${showCompletedExercises ? "on" : "off"}`}
             onClick={() =>
-              mutation.mutate({
+              saveUserSettingsMutation.mutate({
                 ...userSettings,
                 showCompletedExercises: !showCompletedExercises,
               })
@@ -123,7 +125,10 @@ export const SideMenu = () => {
           <ListItemButton
             aria-label={`Show comments is ${showComments ? "on" : "off"}`}
             onClick={() =>
-              mutation.mutate({ ...userSettings, showComments: !showComments })
+              saveUserSettingsMutation.mutate({
+                ...userSettings,
+                showComments: !showComments,
+              })
             }
           >
             <ListItemIcon sx={{ justifyContent: "center" }}>
@@ -149,7 +154,10 @@ export const SideMenu = () => {
           <ListItemButton
             aria-label={`Show media is ${showMedia ? "on" : "off"}`}
             onClick={() =>
-              mutation.mutate({ ...userSettings, showMedia: !showMedia })
+              saveUserSettingsMutation.mutate({
+                ...userSettings,
+                showMedia: !showMedia,
+              })
             }
           >
             <ListItemIcon sx={{ justifyContent: "center" }}>
