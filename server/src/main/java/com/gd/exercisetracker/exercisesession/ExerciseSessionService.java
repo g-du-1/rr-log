@@ -37,4 +37,21 @@ public class ExerciseSessionService {
                 .findFirst()
                 .orElse(null);
     }
+
+    public ExerciseSession startNew(Long userId) {
+        exerciseSessionRepository.findAll().stream()
+                .filter(s -> s.getUser().getUserId().equals(userId) && s.isActive())
+                .forEach(s -> {
+                    s.setActive(false);
+                    exerciseSessionRepository.save(s);
+                });
+
+        ExerciseSession newSession = new ExerciseSession();
+        newSession.setActive(true);
+        User user = new User();
+        user.setUserId(userId);
+        newSession.setUser(user);
+
+        return exerciseSessionRepository.save(newSession);
+    }
 }

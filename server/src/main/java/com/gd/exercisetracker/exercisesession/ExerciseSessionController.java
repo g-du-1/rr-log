@@ -27,4 +27,11 @@ public class ExerciseSessionController {
 
         return exerciseSessionService.update(userId, updateExerciseSessionRequest);
     }
+
+    @PostMapping
+    public ExerciseSession startNew(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long userId = userDetails.getId();
+
+        return exerciseSessionService.startNew(userId);
+    }
 }
