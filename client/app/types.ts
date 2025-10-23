@@ -66,3 +66,18 @@ export type SignInResponse = {
   status: number;
   message?: string;
 };
+
+export type ExerciseSessionResponse = {
+  id: number;
+  active: boolean;
+  createdAt: string;
+  data: {
+    [key: string]: SavedReps;
+  };
+};
+
+export type UpdateExerciseSessionRequest = {
+  data: {
+    [key: string]: SavedReps;
+  };
+};

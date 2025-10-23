@@ -10,6 +10,8 @@ import { Exercise } from "app/types";
 import * as React from "react";
 import { getFormattedTime } from "../util/getFormattedTime";
 import { useBoundStore } from "../store/store";
+import { useUpdateExerciseSession } from "../hooks/useUpdateExerciseSession";
+import { useGetExerciseSession } from "../hooks/useGetExerciseSession";
 
 type Props = {
   exercises: Exercise[];
@@ -18,15 +20,14 @@ type Props = {
 export const RepsModal = ({ exercises }: Props) => {
   const fieldValue = useBoundStore((state) => state.fieldValue);
   const modalOpen = useBoundStore((state) => state.modalOpen);
-  const savedReps = useBoundStore((state) => state.savedReps);
   const selectedExercise = useBoundStore((state) => state.selectedExercise);
-  const savedStartTime = useBoundStore((state) => state.savedStartTime);
   const setFieldValue = useBoundStore((state) => state.setFieldValue);
   const setModalOpen = useBoundStore((state) => state.setModalOpen);
-  const setSavedReps = useBoundStore((state) => state.setSavedReps);
   const startStopwatch = useBoundStore((state) => state.startStopwatch);
   const resetStopwatch = useBoundStore((state) => state.resetStopwatch);
-  const setSavedStartTime = useBoundStore((state) => state.setSavedStartTime);
+  const updateExerciseSession = useUpdateExerciseSession();
+  const { data: exerciseSession } = useGetExerciseSession();
+  const savedReps = exerciseSession?.data;
 
   if (!selectedExercise) {
     return null;
@@ -49,7 +50,7 @@ export const RepsModal = ({ exercises }: Props) => {
         };
       }
 
-      setSavedReps(newReps);
+      updateExerciseSession.mutate(newReps);
 
       if (selectedExercise.category !== "WARM_UP") {
         resetStopwatch();
@@ -58,7 +59,7 @@ export const RepsModal = ({ exercises }: Props) => {
           exercises[exercises.length - 1].key === selectedExercise.key;
 
         const reachedTargetSets =
-          savedReps[selectedExercise.key]?.reps.length ===
+          savedReps?.[selectedExercise.key]?.reps.length ===
           selectedExercise.targetSets;
 
         const shouldStartStopwatch = !(isLastExercise && reachedTargetSets);
@@ -66,10 +67,6 @@ export const RepsModal = ({ exercises }: Props) => {
         if (shouldStartStopwatch) {
           startStopwatch();
         }
-      }
-
-      if (!savedStartTime) {
-        setSavedStartTime(getFormattedTime());
       }
     }
 
@@ -84,7 +81,7 @@ export const RepsModal = ({ exercises }: Props) => {
 
     if (existingExercise) {
       existingExercise.reps = [];
-      setSavedReps(newReps);
+      updateExerciseSession.mutate(newReps);
     }
 
     setModalOpen(false);
@@ -92,7 +89,7 @@ export const RepsModal = ({ exercises }: Props) => {
     resetStopwatch();
   };
 
-  const hasReps = savedReps?.[selectedExercise.key]?.reps?.length > 0;
+  const hasReps = (savedReps?.[selectedExercise.key]?.reps?.length ?? 0) > 0;
 
   return (
     <Dialog

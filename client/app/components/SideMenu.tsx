@@ -14,6 +14,8 @@ import Divider from "@mui/material/Divider";
 import HouseIcon from "@mui/icons-material/House";
 import { useGetUserSettings } from "../hooks/useGetUserSettings";
 import { useSaveUserSettings } from "../hooks/useSaveUserSettings";
+import { useStartNewExSession } from "../hooks/useStartNewExSession";
+import { RocketLaunch } from "@mui/icons-material";
 
 export const SideMenu = () => {
   const router = useRouter();
@@ -21,6 +23,7 @@ export const SideMenu = () => {
   const { data: userSettings } = useGetUserSettings();
 
   const mutation = useSaveUserSettings();
+  const startNewExSessionMutation = useStartNewExSession();
 
   const [open, setOpen] = React.useState(false);
 
@@ -72,6 +75,22 @@ export const SideMenu = () => {
         </ListItem>
 
         <Divider />
+
+        <ListItem key={"New Exercise Session"} disablePadding>
+          <ListItemButton
+            aria-label={`Start New Exercise Session`}
+            onClick={() => startNewExSessionMutation.mutate()}
+          >
+            <ListItemIcon sx={{ justifyContent: "center" }}>
+              <RocketLaunch />
+            </ListItemIcon>
+
+            <ListItemText
+              primary={"New Session"}
+              sx={{ paddingLeft: ".5rem" }}
+            />
+          </ListItemButton>
+        </ListItem>
 
         <ListItem key={"Show Completed"} disablePadding>
           <ListItemButton

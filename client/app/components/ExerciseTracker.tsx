@@ -18,6 +18,7 @@ import { useBoundStore } from "../store/store";
 import { FinishTime } from "./FinishTime";
 import { useGetUserExercises } from "../hooks/useGetUserExercises";
 import { useGetUserSettings } from "../hooks/useGetUserSettings";
+import { useGetExerciseSession } from "../hooks/useGetExerciseSession";
 
 export const ExerciseTracker = () => {
   const { data: exercisesWithIds, isLoading, error } = useGetUserExercises();
@@ -25,9 +26,11 @@ export const ExerciseTracker = () => {
 
   const exercises = exercisesWithIds?.map(({ exercise }) => exercise);
 
-  const savedReps = useBoundStore((state) => state.savedReps);
+  const { data: exerciseSession } = useGetExerciseSession();
+  const savedReps = exerciseSession?.data;
+
   const setSelectedExercise = useBoundStore(
-    (state) => state.setSelectedExercise,
+    (state) => state.setSelectedExercise
   );
   const setModalOpen = useBoundStore((state) => state.setModalOpen);
 
@@ -37,7 +40,9 @@ export const ExerciseTracker = () => {
   };
 
   const isExerciseCompleted = (exercise: Exercise) => {
-    return savedReps?.[exercise.key]?.reps.length >= exercise.targetSets;
+    return (
+      (savedReps?.[exercise.key]?.reps?.length ?? 0) >= exercise.targetSets
+    );
   };
 
   const shouldShowExercise = (exercise: Exercise) => {
@@ -47,7 +52,7 @@ export const ExerciseTracker = () => {
 
   const shouldShowDivider = (
     currentExercise: Exercise,
-    nextExercise: Exercise,
+    nextExercise: Exercise
   ) => {
     return currentExercise.category !== nextExercise.category;
   };
@@ -130,7 +135,7 @@ export const ExerciseTracker = () => {
         ) : (
           <>
             {exercises.map((exercise, index) =>
-              renderExerciseCard(exercise, index),
+              renderExerciseCard(exercise, index)
             )}
 
             <StartTime />
